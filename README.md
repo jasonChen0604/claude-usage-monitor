@@ -27,10 +27,18 @@ recently, expect stale data until your next session.
 
 1. Download the latest `.dmg` from [Releases](../../releases).
 2. Open it and drag **Claude Usage Monitor** into `Applications`.
-3. Launch it. On first run, it offers to configure Claude Code's
-   `statusLine` for you — accept, or do it manually following
+3. **First launch only:** this app isn't signed with an Apple Developer ID,
+   so double-clicking it will show a warning ("Apple could not verify..."/
+   "unidentified developer"). Instead, **right-click (or Control-click)
+   the app in `Applications` and choose "Open"**, then confirm "Open" again
+   in the dialog — this is a one-time step. If you already tried double-
+   clicking and macOS says the app "is damaged", open **System Settings →
+   Privacy & Security**, scroll down, and click **"Open Anyway"** next to
+   the app's name, then confirm.
+4. On first run, it offers to configure Claude Code's `statusLine` for
+   you — accept, or do it manually following
    [`docs/setup-statusline.md`](docs/setup-statusline.md).
-4. Use Claude Code at least once (send one message) so a `rate_limits`
+5. Use Claude Code at least once (send one message) so a `rate_limits`
    payload gets written. The tray icon updates on the next poll (default
    every minute).
 
