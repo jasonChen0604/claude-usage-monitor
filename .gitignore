@@ -1,0 +1,9 @@
+node_modules/
+dist/
+src-tauri/target/
+src-tauri/gen/
+widget/*.xcodeproj/
+*.log
+.DS_Store
+CLAUDE.md
+.claude/

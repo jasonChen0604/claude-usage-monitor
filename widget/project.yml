@@ -1,0 +1,35 @@
+name: ClaudeUsageMonitorWidget
+options:
+  bundleIdPrefix: dev.jasonchen.claude-usage-monitor
+  deploymentTarget:
+    macOS: "13.0"
+
+targets:
+  ClaudeUsageMonitorHost:
+    type: application
+    platform: macOS
+    sources:
+      - path: ClaudeUsageMonitorHost
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.jasonchen.claude-usage-monitor.widgethost
+        INFOPLIST_FILE: ClaudeUsageMonitorHost/Info.plist
+        CODE_SIGN_ENTITLEMENTS: ClaudeUsageMonitorHost/ClaudeUsageMonitorHost.entitlements
+        MARKETING_VERSION: "0.1.0"
+    dependencies:
+      - target: ClaudeUsageWidgetExtension
+        embed: true
+
+  ClaudeUsageWidgetExtension:
+    type: app-extension
+    platform: macOS
+    sources:
+      - path: ClaudeUsageWidget
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.jasonchen.claude-usage-monitor.widgethost.widget
+        INFOPLIST_FILE: ClaudeUsageWidget/Info.plist
+        CODE_SIGN_ENTITLEMENTS: ClaudeUsageWidget/ClaudeUsageWidget.entitlements
+        MARKETING_VERSION: "0.1.0"
+        SKIP_INSTALL: NO
+        GENERATE_INFOPLIST_FILE: NO

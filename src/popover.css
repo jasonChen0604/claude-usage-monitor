@@ -1,0 +1,94 @@
+:root {
+  color-scheme: light dark;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 12px;
+  font-size: 13px;
+}
+
+.window {
+  margin-bottom: 12px;
+}
+
+.window-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.bar {
+  height: 6px;
+  border-radius: 3px;
+  background: color-mix(in srgb, currentColor 15%, transparent);
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: currentColor;
+}
+
+.reset {
+  font-size: 11px;
+  opacity: 0.6;
+}
+
+.refresh-now {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.refresh-now:disabled {
+  opacity: 0.6;
+}
+
+.settings {
+  margin-top: 12px;
+  border-top: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+  padding-top: 12px;
+}
+
+.settings > label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.settings-heading {
+  font-size: 11px;
+  opacity: 0.6;
+  margin: 12px 0 6px;
+}
+
+.settings label:has(.tray-item) {
+  display: flex;
+  justify-content: flex-start;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.empty {
+  opacity: 0.6;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.onboarding {
+  background: color-mix(in srgb, currentColor 8%, transparent);
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 12px;
+  font-size: 12px;
+}
+
+.onboarding code {
+  word-break: break-all;
+}
+
+.onboarding button {
+  margin-top: 6px;
+}
