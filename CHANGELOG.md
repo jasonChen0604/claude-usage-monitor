@@ -6,6 +6,13 @@ All notable changes to this project are documented here. Format follows
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-07-14
+
+### Added
+- Launch at login option, via a new checkbox in the settings panel. The app
+  can now start automatically at login, minimized to the tray, backed by
+  tauri-plugin-autostart.
+
 ## [0.1.1] - 2026-07-14
 
 ### Fixed
