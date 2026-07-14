@@ -1,6 +1,6 @@
 [package]
 name = "claude-usage-monitor"
-version = "0.1.0"
+version = "0.1.1"
 description = "Menu bar app for monitoring Claude subscription usage"
 edition = "2021"
 

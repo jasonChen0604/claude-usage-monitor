@@ -6,6 +6,16 @@ All notable changes to this project are documented here. Format follows
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-07-14
+
+### Fixed
+- Fixed a broken code signature that caused macOS to report the app as
+  "damaged" and refuse to open it. Caused by Tauri signing the .app before
+  this project's custom resource (the collector script) finished copying
+  into place, invalidating the signature's resource seal. The DMG is now
+  built by a dedicated script that re-signs the app after all resources are
+  in place.
+
 ## [0.1.0] - 2026-07-14
 
 ### Added
