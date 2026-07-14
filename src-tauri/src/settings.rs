@@ -18,6 +18,8 @@ pub struct Settings {
     pub poll_interval_minutes: u32,
     /// Which items to show in the tray title, in display order.
     pub tray_items: Vec<TrayItem>,
+    /// Whether the app launches at login, minimized to the tray.
+    pub launch_at_login: bool,
 }
 
 impl Default for Settings {
@@ -25,6 +27,7 @@ impl Default for Settings {
         Self {
             poll_interval_minutes: 1,
             tray_items: vec![TrayItem::FiveHourPercentage, TrayItem::WeeklyPercentage],
+            launch_at_login: false,
         }
     }
 }

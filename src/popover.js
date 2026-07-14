@@ -79,6 +79,10 @@ async function renderSettings(container) {
     </label>
     <p class="settings-heading">Status bar shows</p>
     ${checkboxes}
+    <label>
+      <input type="checkbox" id="launch-at-login" ${settings.launchAtLogin ? "checked" : ""} />
+      Launch at login (minimized)
+    </label>
   `;
   container.appendChild(wrap);
 
@@ -88,6 +92,7 @@ async function renderSettings(container) {
       settings: {
         pollIntervalMinutes: Number(wrap.querySelector("#poll-interval").value) || 10,
         trayItems,
+        launchAtLogin: wrap.querySelector("#launch-at-login").checked,
       },
     });
   };

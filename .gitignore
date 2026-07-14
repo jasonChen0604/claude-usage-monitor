@@ -3,6 +3,7 @@ dist/
 src-tauri/target/
 src-tauri/gen/
 widget/*.xcodeproj/
+widget/build/
 *.log
 .DS_Store
 CLAUDE.md

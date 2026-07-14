@@ -14,6 +14,7 @@ use std::time::Duration;
 use tauri::menu::{Menu, MenuItem, PredefinedMenuItem};
 use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
 use tauri::{AppHandle, Emitter, Manager, RunEvent, State, WindowEvent};
+use tauri_plugin_autostart::ManagerExt;
 use tauri_plugin_store::StoreExt;
 
 const SETTINGS_STORE: &str = "settings.json";
@@ -52,6 +53,12 @@ fn get_settings(state: State<AppState>) -> Settings {
 
 #[tauri::command]
 fn update_settings(app: AppHandle, state: State<AppState>, settings: Settings) {
+    let autostart = app.autolaunch();
+    let _ = if settings.launch_at_login {
+        autostart.enable()
+    } else {
+        autostart.disable()
+    };
     *state.settings.lock().unwrap() = settings.clone();
     save_settings(&app, &settings);
     refresh_tray(&app, &state);
@@ -84,6 +91,7 @@ fn toggle_main_window(app: &AppHandle) {
         } else {
             let _ = window.show();
             let _ = window.set_focus();
+            refresh_tray(app, &app.state::<AppState>());
         }
     }
 }
@@ -100,12 +108,22 @@ fn start_poll_loop(app: AppHandle) {
 fn main() {
     tauri::Builder::default()
         .plugin(tauri_plugin_store::Builder::default().build())
+        .plugin(tauri_plugin_autostart::init(
+            tauri_plugin_autostart::MacosLauncher::LaunchAgent,
+            None,
+        ))
         .manage(AppState {
             settings: Mutex::new(Settings::default()),
         })
         .setup(|app| {
             let handle = app.handle().clone();
             let loaded = load_settings(&handle);
+            let autostart = handle.autolaunch();
+            let _ = if loaded.launch_at_login {
+                autostart.enable()
+            } else {
+                autostart.disable()
+            };
             *handle.state::<AppState>().settings.lock().unwrap() = loaded;
 
             let show_item = MenuItem::with_id(app, "show", "Open", true, None::<&str>)?;
