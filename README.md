@@ -8,6 +8,8 @@ Built with extensibility in mind: usage data is normalized into a common
 schema so support for other AI coding subscriptions (GitHub Copilot, Codex,
 ...) can be added later without changing the app itself.
 
+![Popover showing 5-hour and weekly usage, with refresh and display settings](assets/screenshot-popover.png)
+
 ## Why this exists, and its one real limitation
 
 Anthropic doesn't publish an API for subscription usage. The only
