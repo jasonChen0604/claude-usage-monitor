@@ -23,6 +23,19 @@ Practical consequence: the numbers you see reflect the last time Claude Code
 rendered its status line, not a live query. If you haven't run Claude Code
 recently, expect stale data until your next session.
 
+Two things follow from this:
+
+- **Small discrepancies vs. `claude /usage` are expected.** Since there's no
+  live API, this app can only show what was captured at the last statusLine
+  render — it won't always match `/usage` to the percentage point. This should
+  narrow if Anthropic changes how usage data is exposed in the future, but
+  there's no ETA for that.
+- **Usage is shared with Claude chat/desktop**, so if you've been using those
+  instead of Claude Code, the numbers here won't reflect that activity until
+  Claude Code runs again. If the tray looks stale, send Claude Code any
+  message (or hit "Refresh now" in the popover after) to force a fresh
+  statusLine render.
+
 ## Install
 
 1. Download the latest `.dmg` from [Releases](../../releases).

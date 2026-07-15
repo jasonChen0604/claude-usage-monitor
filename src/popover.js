@@ -79,6 +79,7 @@ async function renderSettings(container) {
     </label>
     <p class="settings-heading">Status bar shows</p>
     ${checkboxes}
+    <p class="settings-heading">Settings</p>
     <label>
       <input type="checkbox" id="launch-at-login" ${settings.launchAtLogin ? "checked" : ""} />
       Launch at login (minimized)
@@ -141,15 +142,24 @@ async function render() {
   }
 
   renderRefreshButton(app);
+
+  const hint = document.createElement("p");
+  hint.className = "hint";
+  hint.textContent =
+    "Numbers may differ slightly from claude /usage — this reads Claude Code's last statusLine update, not a live query. Usage is shared with Claude chat, so if it looks stale, use Claude Code once to refresh it.";
+  app.appendChild(hint);
+
   await renderSettings(app);
 }
 
 render();
 
 // The window is hidden/shown, not reloaded, when toggled from the tray
-// (see main.rs's CloseRequested handler), so a one-time render on page load
-// would otherwise go stale. Re-render whenever the window regains focus,
-// and periodically while it's left open so the countdown text stays fresh.
+// (see main.rs's toggle_main_window, which calls refresh_tray itself right
+// before showing the window), so a one-time render on page load would
+// otherwise go stale. usage-refreshed below picks up that call. This
+// focus listener is a fallback for the rare case focus fires without a
+// tray click (e.g. Cmd-Tab back to the window).
 const currentWindow = getCurrentWindow();
 currentWindow.listen("tauri://focus", () => render());
 setInterval(() => {

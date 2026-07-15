@@ -45,6 +45,13 @@ body {
   opacity: 0.6;
 }
 
+.hint {
+  font-size: 11px;
+  opacity: 0.6;
+  margin: 6px 0 0;
+  line-height: 1.4;
+}
+
 .settings {
   margin-top: 12px;
   border-top: 1px solid color-mix(in srgb, currentColor 15%, transparent);
@@ -64,7 +71,8 @@ body {
   margin: 12px 0 6px;
 }
 
-.settings label:has(.tray-item) {
+.settings label:has(.tray-item),
+.settings label:has(#launch-at-login) {
   display: flex;
   justify-content: flex-start;
   gap: 6px;
