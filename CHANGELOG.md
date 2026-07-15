@@ -6,6 +6,22 @@ All notable changes to this project are documented here. Format follows
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-07-15
+
+### Fixed
+- Popover now refreshes usage data automatically when opened, instead of
+  requiring a manual "Refresh now" click. Previously relied on a
+  `tauri://focus` event that doesn't reliably fire when the window is
+  shown from the tray icon; now driven by the same refresh call the tray
+  icon click already triggers.
+- Fixed "Launch at login" checkbox being right-aligned instead of matching
+  the other settings rows, and added a "Settings" section heading above it.
+
+### Changed
+- README and popover now note that usage numbers may differ slightly from
+  `claude /usage` (no live API exists) and that usage is shared with
+  Claude chat, so data only updates after Claude Code itself runs.
+
 ## [0.2.0] - 2026-07-14
 
 ### Added
