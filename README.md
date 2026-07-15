@@ -10,6 +10,8 @@ schema so support for other AI coding subscriptions (GitHub Copilot, Codex,
 
 ![Popover showing 5-hour and weekly usage, with refresh and display settings](assets/screenshot-popover.png)
 
+📖 Backstory: [I Ran Out of Gas Mid-Sprint With Claude Code, So I Built It a Fuel Gauge](https://jason-chen-0604.medium.com/i-ran-out-of-gas-mid-sprint-with-claude-code-so-i-built-it-a-fuel-gauge-e84f07a0503f)
+
 ## Why this exists, and its one real limitation
 
 Anthropic doesn't publish an API for subscription usage. The only
