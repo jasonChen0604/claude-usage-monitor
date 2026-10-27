@@ -11,7 +11,8 @@ you automatically on first launch, but you can also do it manually:
 {
   "statusLine": {
     "type": "command",
-    "command": "node /Applications/Claude Usage Monitor.app/Contents/Resources/scripts/claude-statusline-collector.cjs"
+    "command": "node /Applications/Claude Usage Monitor.app/Contents/Resources/scripts/claude-statusline-collector.cjs",
+    "refreshInterval": 30
   }
 }
 ```

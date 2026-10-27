@@ -90,6 +90,8 @@ pub fn install_statusline(app: tauri::AppHandle) -> Result<(), String> {
     settings["statusLine"] = json!({
         "type": "command",
         "command": format!("node \"{script_path}\""),
+        // Without this the snapshot only refreshes on Claude Code activity.
+        "refreshInterval": 30,
     });
 
     if let Some(parent) = settings_path.parent() {
