@@ -6,6 +6,17 @@ All notable changes to this project are documented here. Format follows
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-28
+
+### Added
+- Poll interval is now in seconds (default 10, minimum 5) so the tray updates
+  faster. Previously stored minute-based settings are read as-is via a serde
+  alias.
+
+### Fixed
+- statusLine now registers `refreshInterval: 30` so the snapshot keeps
+  updating while Claude Code is idle.
+
 ## [0.2.1] - 2026-07-15
 
 ### Fixed
