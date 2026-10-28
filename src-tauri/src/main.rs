@@ -99,9 +99,9 @@ fn toggle_main_window(app: &AppHandle) {
 fn start_poll_loop(app: AppHandle) {
     std::thread::spawn(move || loop {
         let state = app.state::<AppState>();
-        let minutes = state.settings.lock().unwrap().poll_interval_minutes.max(1);
+        let secs = state.settings.lock().unwrap().poll_interval_seconds.max(5);
         refresh_tray(&app, &state);
-        std::thread::sleep(Duration::from_secs(minutes as u64 * 60));
+        std::thread::sleep(Duration::from_secs(secs as u64));
     });
 }
 

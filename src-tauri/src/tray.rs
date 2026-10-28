@@ -108,7 +108,8 @@ mod tests {
     fn tray_title_respects_custom_selection_and_order() {
         let snap = claude_snapshot(vec![window("5h", 42.0, 130), window("7d", 18.0, 60)]);
         let settings = Settings {
-            poll_interval_minutes: 10,
+            poll_interval_seconds: 10,
+            launch_at_login: false,
             tray_items: vec![TrayItem::WeeklyPercentage, TrayItem::FiveHourCountdown],
         };
         let text = tray_title(&[snap], &settings);
@@ -119,7 +120,8 @@ mod tests {
     fn tray_title_skips_missing_window() {
         let snap = claude_snapshot(vec![window("5h", 42.0, 60)]);
         let settings = Settings {
-            poll_interval_minutes: 10,
+            poll_interval_seconds: 10,
+            launch_at_login: false,
             tray_items: vec![TrayItem::WeeklyPercentage, TrayItem::FiveHourPercentage],
         };
         assert_eq!(tray_title(&[snap], &settings), "42%");

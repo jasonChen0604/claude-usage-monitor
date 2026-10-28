@@ -35,4 +35,4 @@ want to keep its look, you have two options:
 3. Start (or resume) a Claude Code session and send at least one message —
    the `rate_limits` field only appears after the first API response.
 4. Open the Claude Usage Monitor app; the tray icon should update within one
-   polling interval (default 1 minute, configurable in Settings).
+   polling interval (default 10 seconds, configurable in Settings).

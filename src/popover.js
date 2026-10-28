@@ -74,8 +74,8 @@ async function renderSettings(container) {
     .join("");
 
   wrap.innerHTML = `
-    <label>Poll interval (minutes)
-      <input type="number" min="1" id="poll-interval" value="${settings.pollIntervalMinutes}" style="width:50px" />
+    <label>Poll interval (seconds)
+      <input type="number" min="5" id="poll-interval" value="${settings.pollIntervalSeconds}" style="width:50px" />
     </label>
     <p class="settings-heading">Status bar shows</p>
     ${checkboxes}
@@ -91,7 +91,7 @@ async function renderSettings(container) {
     const trayItems = [...wrap.querySelectorAll(".tray-item:checked")].map((el) => el.value);
     invoke("update_settings", {
       settings: {
-        pollIntervalMinutes: Number(wrap.querySelector("#poll-interval").value) || 10,
+        pollIntervalSeconds: Number(wrap.querySelector("#poll-interval").value) || 10,
         trayItems,
         launchAtLogin: wrap.querySelector("#launch-at-login").checked,
       },

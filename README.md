@@ -55,7 +55,7 @@ Two things follow from this:
    [`docs/setup-statusline.md`](docs/setup-statusline.md).
 5. Use Claude Code at least once (send one message) so a `rate_limits`
    payload gets written. The tray icon updates on the next poll (default
-   every minute).
+   every 10 seconds).
 
 ## Features
 
@@ -64,7 +64,7 @@ Two things follow from this:
 - Click the tray icon for a small popover with both windows' progress and
   reset times.
 - Configurable poll interval (how often the app re-reads the local usage
-  snapshot; default 1 minute).
+  snapshot; default 10 seconds).
 - macOS widget (Notification Center / desktop) mirroring the same data.
 
 ## Adding another provider (Copilot, Codex, ...)

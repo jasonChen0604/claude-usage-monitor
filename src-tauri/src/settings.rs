@@ -14,8 +14,9 @@ pub enum TrayItem {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Settings {
-    /// Minutes between re-reads of the snapshot directory.
-    pub poll_interval_minutes: u32,
+    /// Seconds between re-reads of the snapshot directory.
+    #[serde(alias = "pollIntervalMinutes")]
+    pub poll_interval_seconds: u32,
     /// Which items to show in the tray title, in display order.
     pub tray_items: Vec<TrayItem>,
     /// Whether the app launches at login, minimized to the tray.
@@ -25,7 +26,7 @@ pub struct Settings {
 impl Default for Settings {
     fn default() -> Self {
         Self {
-            poll_interval_minutes: 1,
+            poll_interval_seconds: 10,
             tray_items: vec![TrayItem::FiveHourPercentage, TrayItem::WeeklyPercentage],
             launch_at_login: false,
         }
