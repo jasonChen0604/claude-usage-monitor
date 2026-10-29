@@ -124,8 +124,10 @@ async function renderOnboarding(container) {
 }
 
 async function render() {
-  const app = document.getElementById("app");
-  app.innerHTML = "";
+  // Build off-DOM and swap in one step: clearing #app up front left it empty
+  // across several awaits, so clicks landing mid-render (every poll tick)
+  // were lost, and overlapping renders appended duplicate content.
+  const app = document.createDocumentFragment();
 
   await renderOnboarding(app);
 
@@ -150,6 +152,14 @@ async function render() {
   app.appendChild(hint);
 
   await renderSettings(app);
+  document.getElementById("app").replaceChildren(app);
+}
+
+// Re-rendering rebuilds the settings inputs, so skip it while the user is
+// editing them or it would wipe their in-progress change.
+function renderUnlessEditing() {
+  const editingSettings = document.activeElement?.closest(".settings");
+  if (document.visibilityState === "visible" && !editingSettings) render();
 }
 
 render();
@@ -162,12 +172,9 @@ render();
 // tray click (e.g. Cmd-Tab back to the window).
 const currentWindow = getCurrentWindow();
 currentWindow.listen("tauri://focus", () => render());
-setInterval(() => {
-  const editingSettings = document.activeElement?.closest(".settings");
-  if (document.visibilityState === "visible" && !editingSettings) render();
-}, 60_000);
+setInterval(renderUnlessEditing, 60_000);
 
 // Fires after any refresh_tray call in Rust — the poll loop, the tray
 // menu's "Refresh Now" item, or this panel's own button — so the popover
 // stays in sync no matter which one triggered it.
-listen("usage-refreshed", () => render());
+listen("usage-refreshed", renderUnlessEditing);

@@ -74,8 +74,9 @@ fn refresh_now(app: AppHandle, state: State<AppState>) {
 fn refresh_tray(app: &AppHandle, state: &State<AppState>) {
     let snapshots = snapshot::read_all_snapshots();
     snapshot::mirror_to_app_group(&snapshots);
-    let settings = state.settings.lock().unwrap();
-    let title = tray::tray_title(&snapshots, &settings);
+    // Release the lock before set_title: off the main thread it blocks on the
+    // main thread, which may itself be waiting on this lock (get_settings).
+    let title = tray::tray_title(&snapshots, &state.settings.lock().unwrap());
     if let Some(tray) = app.tray_by_id("main") {
         let _ = tray.set_title(Some(title));
     }
