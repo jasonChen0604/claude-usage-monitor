@@ -1,7 +1,7 @@
 # Setting up the statusLine collector
 
-The app needs Claude Code to be configured to run this project's collector
-script as its `statusLine.command`. The app's onboarding flow does this for
+The app needs Claude Code to be configured to run the app's own binary in
+`--collect` mode as its `statusLine.command` (no `node` required). The app's onboarding flow does this for
 you automatically on first launch, but you can also do it manually:
 
 1. Open `~/.claude/settings.json` (create it if it doesn't exist).
@@ -11,7 +11,7 @@ you automatically on first launch, but you can also do it manually:
 {
   "statusLine": {
     "type": "command",
-    "command": "node /Applications/Claude Usage Monitor.app/Contents/Resources/scripts/claude-statusline-collector.cjs",
+    "command": "\"/Applications/Claude Usage Monitor.app/Contents/MacOS/claude-usage-monitor\" --collect",
     "refreshInterval": 30
   }
 }
@@ -23,11 +23,7 @@ prints to stdout *is* the statusline). By default the collector just prints
 the current model name. If you already have a custom `statusLine.command` and
 want to keep its look, you have two options:
 
-- Edit `scripts/claude-statusline-collector.cjs` to build whatever statusline
-  string you want at the bottom of the script (you have the full input JSON:
-  `model`, `cwd`, `cost`, `context_window`, etc. — see
-  [statusline docs](https://code.claude.com/docs/en/statusline)).
-- Or run both scripts in your `statusLine.command` (e.g. a small shell
+- Run both scripts in your `statusLine.command` (e.g. a small shell
   wrapper that pipes stdin to both, and prints your existing script's output).
   The collector always writes the snapshot file as a side effect regardless
   of what it prints.

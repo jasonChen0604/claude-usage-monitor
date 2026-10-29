@@ -31,8 +31,8 @@ session):
 }
 ```
 
-This project's collector script (`scripts/claude-statusline-collector.cjs`) is
-installed as that command. It extracts `rate_limits`, writes it out as a
+The app's own binary, run as `claude-usage-monitor --collect`
+(`src-tauri/src/collect.rs`), is installed as that command. It extracts `rate_limits`, writes it out as a
 `UsageSnapshot` file, and prints a minimal statusline (the current model
 name) to stdout — see `docs/setup-statusline.md` for how to customize or
 chain it with an existing statusline script.

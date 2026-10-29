@@ -9,16 +9,12 @@ fn claude_settings_path() -> PathBuf {
         .join("settings.json")
 }
 
-fn collector_script_path(app: &tauri::AppHandle) -> Option<PathBuf> {
-    app.path()
-        .resolve(
-            "scripts/claude-statusline-collector.cjs",
-            tauri::path::BaseDirectory::Resource,
-        )
-        .ok()
+/// The statusLine command: this app's own binary in `--collect` mode (see
+/// collect.rs), so it works without `node` on Claude Code's PATH.
+fn collector_command() -> Option<String> {
+    let exe = std::env::current_exe().ok()?;
+    Some(format!("\"{}\" --collect", exe.to_string_lossy()))
 }
-
-use tauri::Manager;
 
 #[derive(Debug, serde::Serialize)]
 pub struct StatusLineState {
@@ -27,12 +23,12 @@ pub struct StatusLineState {
 }
 
 /// Checks whether Claude Code's statusLine is already pointed at our
-/// collector script. Doesn't distinguish "not configured" from "configured
+/// collector command. Doesn't distinguish "not configured" from "configured
 /// for something else" beyond returning the existing command string, since
 /// the caller (onboarding UI) needs to show that to the user either way.
 #[tauri::command]
-pub fn check_statusline(app: tauri::AppHandle) -> StatusLineState {
-    let Some(script_path) = collector_script_path(&app) else {
+pub fn check_statusline() -> StatusLineState {
+    let Some(command) = collector_command() else {
         return StatusLineState {
             configured: false,
             existing_command: None,
@@ -61,7 +57,7 @@ pub fn check_statusline(app: tauri::AppHandle) -> StatusLineState {
 
     let configured = existing_command
         .as_deref()
-        .is_some_and(|cmd| cmd.contains(&script_path.to_string_lossy().to_string()));
+        .is_some_and(|cmd| cmd.contains(&command));
 
     StatusLineState {
         configured,
@@ -70,16 +66,13 @@ pub fn check_statusline(app: tauri::AppHandle) -> StatusLineState {
 }
 
 /// Writes `statusLine.command` in `~/.claude/settings.json` to point at our
-/// collector script, preserving every other existing setting. Overwrites
+/// collector command, preserving every other existing setting. Overwrites
 /// any prior `statusLine.command` — the onboarding UI must have already
 /// shown the user what was there (via check_statusline) before calling
 /// this, since we can't safely merge two arbitrary shell commands.
 #[tauri::command]
-pub fn install_statusline(app: tauri::AppHandle) -> Result<(), String> {
-    let script_path = collector_script_path(&app)
-        .ok_or("could not resolve collector script path")?
-        .to_string_lossy()
-        .to_string();
+pub fn install_statusline() -> Result<(), String> {
+    let command = collector_command().ok_or("could not resolve app executable path")?;
 
     let settings_path = claude_settings_path();
     let mut settings: Value = fs::read_to_string(&settings_path)
@@ -89,7 +82,7 @@ pub fn install_statusline(app: tauri::AppHandle) -> Result<(), String> {
 
     settings["statusLine"] = json!({
         "type": "command",
-        "command": format!("node \"{script_path}\""),
+        "command": command,
         // Without this the snapshot only refreshes on Claude Code activity.
         "refreshInterval": 30,
     });

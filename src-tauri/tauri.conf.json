@@ -35,9 +35,6 @@
       "icons/128x128@2x.png",
       "icons/icon.icns"
     ],
-    "resources": {
-      "../scripts/claude-statusline-collector.cjs": "scripts/claude-statusline-collector.cjs"
-    },
     "macOS": {
       "minimumSystemVersion": "12.0"
     }

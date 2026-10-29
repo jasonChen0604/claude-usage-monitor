@@ -2,8 +2,8 @@
 # Re-signs the Tauri-built .app and packages a fresh .dmg ourselves.
 #
 # Tauri's own macOS bundler can ad-hoc sign the .app *before* this project's
-# custom `bundle.resources` mapping (scripts/claude-statusline-collector.cjs)
-# finishes copying into Contents/Resources/, which leaves the code signature
+# custom `bundle.resources` mapping (if any) finishes copying into
+# Contents/Resources/, which leaves the code signature
 # sealing a resource set that no longer matches the actual bundle contents.
 # macOS then refuses to launch the app with a misleading "is damaged" error
 # (confirmed via `spctl -a -vv`: "code has no resources but signature

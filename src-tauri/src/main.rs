@@ -2,6 +2,7 @@
 // macOS but harmless to keep for cross-platform Tauri convention.
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+mod collect;
 mod onboarding;
 mod settings;
 mod snapshot;
@@ -107,6 +108,13 @@ fn start_poll_loop(app: AppHandle) {
 }
 
 fn main() {
+    // Invoked by Claude Code as its statusLine command — collect and exit
+    // without starting the tray app.
+    if std::env::args().any(|arg| arg == "--collect") {
+        collect::run();
+        return;
+    }
+
     tauri::Builder::default()
         .plugin(tauri_plugin_store::Builder::default().build())
         .plugin(tauri_plugin_autostart::init(

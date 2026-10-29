@@ -57,18 +57,18 @@ open "/Applications/Claude Usage Monitor.app"
 
 - Click the tray icon — the popover should appear.
 - If `~/.claude/settings.json` doesn't already point at this project's
-  collector script, the popover should show an onboarding prompt at the
+  `--collect` command, the popover should show an onboarding prompt at the
   top. Click "Configure statusLine" and confirm `statusLine.command` in
   `~/.claude/settings.json` was actually written.
 
 ## 5. Seed test usage data
 
 No need to run a real Claude Code session — just pipe fake data straight
-into the collector script:
+into the collector:
 
 ```sh
 echo '{"model":{"display_name":"Opus"},"rate_limits":{"five_hour":{"used_percentage":42,"resets_at":'$(($(date +%s)+3600))'},"seven_day":{"used_percentage":18,"resets_at":'$(($(date +%s)+345600))'}}}' \
-  | node scripts/claude-statusline-collector.cjs
+  | "/Applications/Claude Usage Monitor.app/Contents/MacOS/claude-usage-monitor" --collect
 
 cat "$HOME/Library/Application Support/claude-usage-monitor/snapshots/claude.json"
 ```
