@@ -20,6 +20,9 @@ All notable changes to this project are documented here. Format follows
   settings are being edited.
 - Possible app freeze from holding the settings lock while updating the tray
   title.
+- "Configure statusLine" now refuses to register the app while it runs from
+  the DMG or a translocated path, and shows the error instead of failing
+  silently.
 
 ## [0.3.0] - 2026-10-28
 

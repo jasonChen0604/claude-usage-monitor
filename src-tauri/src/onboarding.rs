@@ -12,7 +12,7 @@ fn claude_settings_path() -> PathBuf {
 /// The statusLine command: this app's own binary in `--collect` mode (see
 /// collect.rs), so it works without `node` on Claude Code's PATH.
 fn collector_command() -> Option<String> {
-    let exe = std::env::current_exe().ok()?;
+    let exe = std::env::current_exe().ok()?.canonicalize().ok()?;
     Some(format!("\"{}\" --collect", exe.to_string_lossy()))
 }
 
@@ -73,6 +73,11 @@ pub fn check_statusline() -> StatusLineState {
 #[tauri::command]
 pub fn install_statusline() -> Result<(), String> {
     let command = collector_command().ok_or("could not resolve app executable path")?;
+    // A DMG mount or App Translocation path is temporary (and the DMG may be
+    // replaced), so registering it would break collection or run a stale binary.
+    if command.starts_with("\"/Volumes/") || command.contains("/AppTranslocation/") {
+        return Err("Move Claude Usage Monitor to /Applications and reopen it first.".into());
+    }
 
     let settings_path = claude_settings_path();
     let mut settings: Value = fs::read_to_string(&settings_path)

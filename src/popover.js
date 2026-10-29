@@ -118,7 +118,11 @@ async function renderOnboarding(container) {
   container.appendChild(box);
 
   box.querySelector("#install-statusline").addEventListener("click", async () => {
-    await invoke("install_statusline");
+    try {
+      await invoke("install_statusline");
+    } catch (err) {
+      alert(err);
+    }
     render();
   });
 }
