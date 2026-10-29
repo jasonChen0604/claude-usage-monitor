@@ -6,6 +6,21 @@ All notable changes to this project are documented here. Format follows
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-10-29
+
+### Changed
+- Usage collection no longer requires Node.js: the statusLine command now
+  runs the app binary in `--collect` mode instead of
+  `node …/claude-statusline-collector.cjs`. Existing installs are prompted in
+  the popover to re-run "Configure statusLine".
+
+### Fixed
+- "Refresh now" button could miss clicks because each poll re-render briefly
+  emptied the popover; re-renders now swap in atomically and skip while
+  settings are being edited.
+- Possible app freeze from holding the settings lock while updating the tray
+  title.
+
 ## [0.3.0] - 2026-10-28
 
 ### Added
